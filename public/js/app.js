@@ -8,15 +8,13 @@ formWeather.addEventListener("submit", (e) => {
 	msg_1.textContent = "Loading...";
 	msg_2.textContent = "";
 
-	fetch(`http://localhost:3000/weather?address=${searchLocation.value}`).then(
-		(response) => {
-			response.json().then((data) => {
-				if (data.error) {
-					msg_1.textContent = data.error;
-				} else {
-					msg_2.textContent = data.forecast;
-				}
-			});
-		}
-	);
+	fetch(`/weather?address = ${searchLocation.value}`).then((response) => {
+		response.json().then((data) => {
+			if (data.error) {
+				msg_1.textContent = data.error;
+			} else {
+				msg_2.textContent = data.forecast;
+			}
+		});
+	});
 });

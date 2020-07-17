@@ -5,6 +5,8 @@ const forecast = require("./utils/forecast");
 const geocode = require("./utils/geocode");
 const app = express();
 
+const port = process.env.PORT || 3000; // Get the port from Heroku or set it default 3000 locally
+
 // define path for Express Config
 const pathPublicDirectory = path.join(__dirname, "../public");
 const viewPath = path.join(__dirname, "../templates/views");
@@ -21,14 +23,14 @@ app.use(express.static(pathPublicDirectory));
 app.get("", (req, res) => {
 	res.render("index", {
 		title: "Weather App",
-		name: "Mostafa",
+		name: "Mostafa Tavassoli",
 	});
 });
 
 app.get("/about", (req, res) => {
 	res.render("about", {
 		title: "About Me",
-		name: "Mostafa",
+		name: "Mostafa Tavassoli",
 	});
 });
 
@@ -36,18 +38,14 @@ app.get("/help", (req, res) => {
 	res.render("help", {
 		helpText: "This is some useful test",
 		title: "Help",
-		name: "Mostafa",
+		name: "Mostafa Tavassoli",
 	});
 });
-
-// app.get("/", (req, res) => {
-// 	res.send("Welcome to Express");
-// });
 
 app.get("/weather", (req, res) => {
 	if (!req.query.address) {
 		return res.send({
-			error: "You must set the Address",
+			error: "You must set the Address. Please try again",
 		});
 	}
 	geocode(req.query.address, (error, { lat, lon, location } = {}) => {
@@ -70,11 +68,11 @@ app.get("/weather", (req, res) => {
 app.get("*", (req, res) => {
 	res.render("404", {
 		title: "404",
-		name: "Andrew Mead",
+		name: "Mostafa Tavassoli",
 		errorMessage: "Page not found.",
 	});
 });
 
-app.listen(3000, () => {
-	console.log("server runs on port 3000");
+app.listen(port, () => {
+	console.log(`server runs on port ${port}.`);
 });
